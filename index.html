@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        
+         <script  src="https://code.jquery.com/jquery-3.1.1.min.js"  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8"  crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+       
+        <script type="text/javascript">
+            
+             cargar_usuarios = function (usuarios){
+                
+                var tabla = $('table');
+                for (var i=0; i < usuarios.length; i++){
+                        var tr = $("#tr");
+                        var col_nombre = $("<td>" + usuarios[i]['name'] + "</td> " );
+                        var col_email = $("<td>" + usuarios[i]['email'] + "</td>");
+                        
+                        
+                        tr.append(col_nombre);
+                       
+                        tr.append(tr);
+                        
+                }
+                
+            };
+            
+            
+            $(function () {
+                var boton_usuario = $('#usuarios');
+                boton_usuario.on('click', function (e) {
+
+                    var ajax = $.ajax({
+                        
+                        data:{},
+                        url: "bd.php",
+                        type: "POST",
+                        success : function(response){
+                            
+                            
+                           var usuarios = JSON.parse(response); 
+                           cargar_usuarios(usuarios);
+                            
+                        },
+                        
+                        error: function(response,status,error){
+                            
+                            alert("no se encontrado");
+                        }
+                        
+                    })
+
+                })
+
+
+            })
+
+        </script>
+
+
+
+    </head>
+    <body>
+        <div class="container">
+            <button id="usuarios" class="btn btn-default btn-primary"> Cargar Usuarios</button>
+            <table  class="table table-striped">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                  
+                        
+                </tr>
+                
+                <tr id="tr">
+                    
+                    <td></td>
+                    
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
